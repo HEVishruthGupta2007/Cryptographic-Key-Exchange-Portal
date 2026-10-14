@@ -1,3 +1,4 @@
+
 import mysql.connector
 
 from config import (
@@ -15,5 +16,9 @@ def get_connection():
         port=DB_PORT,
         user=DB_USER,
         password=DB_PASSWORD,
-        database=DB_NAME
+        database=DB_NAME,
+        ssl_ca="/etc/ssl/certs/ca-certificates.crt",
+        ssl_verify_cert=True,
+        ssl_verify_identity=True,
+        connection_timeout=15
     )
