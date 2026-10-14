@@ -1,0 +1,156 @@
+
+{% extends "base.html" %}
+
+{% block title %}Dashboard - CryptoKey Portal{% endblock %}
+
+{% block content %}
+
+<section class="dashboard-page">
+    <div class="container py-5">
+
+        <!-- Welcome banner -->
+        <div class="dashboard-welcome mb-5">
+            <div class="row align-items-center g-4">
+                <div class="col-md-8">
+                    <span class="dashboard-eyebrow">
+                        🔐 SECURE FILE EXCHANGE
+                    </span>
+
+                    <h1 class="dashboard-heading mt-3">
+                        Welcome, {{ session["user_name"] }}!
+                    </h1>
+
+                    <p class="dashboard-welcome-text mb-0">
+                        Manage your files, securely exchange documents,
+                        and access your account information.
+                    </p>
+                </div>
+
+                <div class="col-md-4 text-md-end">
+                    <div class="dashboard-shield" aria-hidden="true">
+                        🛡️
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section heading -->
+        <div class="dashboard-section-heading mb-4">
+            <div>
+                <h2>Quick Actions</h2>
+                <p class="text-muted mb-0">
+                    Choose an option to continue.
+                </p>
+            </div>
+        </div>
+
+        <!-- Dashboard action cards -->
+        <div class="row g-4">
+
+            <!-- Upload -->
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card dashboard-card h-100">
+                    <div class="card-body">
+                        <div class="dashboard-card-icon upload-icon"
+                             aria-hidden="true">
+                            📤
+                        </div>
+
+                        <h3 class="dashboard-card-title">
+                            Upload File
+                        </h3>
+
+                        <p class="dashboard-card-description">
+                            Select a recipient and securely send a file
+                            using the portal's encryption workflow.
+                        </p>
+
+                        <a href="{{ url_for('upload_file') }}"
+                           class="btn btn-primary dashboard-action-btn">
+                            Upload a File <span aria-hidden="true">→</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- My Files -->
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card dashboard-card h-100">
+                    <div class="card-body">
+                        <div class="dashboard-card-icon files-icon"
+                             aria-hidden="true">
+                            📁
+                        </div>
+
+                        <h3 class="dashboard-card-title">
+                            My Files
+                        </h3>
+
+                        <p class="dashboard-card-description">
+                            View your available files and access the
+                            file-sharing actions permitted by your account.
+                        </p>
+
+                        <a href="{{ url_for('my_files') }}"
+                           class="btn btn-success dashboard-action-btn">
+                            View My Files <span aria-hidden="true">→</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Profile -->
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card dashboard-card h-100">
+                    <div class="card-body">
+                        <div class="dashboard-card-icon profile-icon"
+                             aria-hidden="true">
+                            👤
+                        </div>
+
+                        <h3 class="dashboard-card-title">
+                            My Profile
+                        </h3>
+
+                        <p class="dashboard-card-description">
+                            View your account information and
+                            manage your profile details.
+                        </p>
+
+                        <a href="{{ url_for('profile') }}"
+                           class="btn btn-outline-primary dashboard-action-btn">
+                            View Profile <span aria-hidden="true">→</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Security information -->
+        <div class="dashboard-security mt-5">
+            <div class="dashboard-security-icon" aria-hidden="true">
+                🔒
+            </div>
+
+            <div>
+                <h3>Your Security Matters</h3>
+                <p class="mb-0">
+                    Always sign out when using a shared device.
+                    Only share files with intended recipients.
+                </p>
+            </div>
+        </div>
+
+        <!-- Logout -->
+        <div class="dashboard-footer-actions mt-4">
+            <a href="{{ url_for('logout') }}"
+               class="btn btn-outline-danger">
+                <span aria-hidden="true">↪</span> Sign Out
+            </a>
+        </div>
+
+    </div>
+</section>
+
+{% endblock %}

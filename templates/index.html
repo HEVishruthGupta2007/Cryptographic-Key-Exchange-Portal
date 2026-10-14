@@ -1,0 +1,233 @@
+
+{% extends "base.html" %}
+
+{% block title %}
+Home - CryptoKey Portal
+{% endblock %}
+
+{% block content %}
+
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+
+        <div class="mb-4">
+            <span class="badge rounded-pill bg-info text-dark px-3 py-2">
+                🔐 Secure Cryptographic File Exchange
+            </span>
+        </div>
+
+        <h1>
+            Cryptographic Key Exchange
+            <span class="d-block">Authentication Portal</span>
+        </h1>
+
+        <p class="lead mt-4">
+            Share files securely with authenticated users using
+            AES-GCM encryption and RSA-OAEP key protection.
+        </p>
+
+        <div class="mt-4 d-flex flex-wrap justify-content-center gap-3">
+
+            <a href="{{ url_for('register') }}"
+               class="btn btn-primary btn-lg">
+                Get Started →
+            </a>
+
+            <a href="{{ url_for('login') }}"
+               class="btn btn-outline-light btn-lg">
+                User Login
+            </a>
+
+            <a href="{{ url_for('admin_login') }}"
+               class="btn btn-outline-light btn-lg">
+                Admin Portal
+            </a>
+
+        </div>
+
+        <div class="row justify-content-center mt-5 g-3">
+
+            <div class="col-6 col-md-4">
+                <div class="hero-stat">
+                    <div class="hero-stat-icon">🛡️</div>
+                    <div class="hero-stat-label">Secure Authentication</div>
+                </div>
+            </div>
+
+            <div class="col-6 col-md-4">
+                <div class="hero-stat">
+                    <div class="hero-stat-icon">🔑</div>
+                    <div class="hero-stat-label">Protected Key Exchange</div>
+                </div>
+            </div>
+
+            <div class="col-6 col-md-4">
+                <div class="hero-stat">
+                    <div class="hero-stat-icon">📁</div>
+                    <div class="hero-stat-label">Encrypted File Sharing</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="container py-5">
+
+    <div class="text-center mb-5">
+        <span class="text-primary fw-semibold">CORE FEATURES</span>
+        <h2 class="section-title mt-2 mb-3">
+            Security at Every Step
+        </h2>
+        <p class="text-muted mx-auto" style="max-width: 650px;">
+            A cryptography-based portal designed to protect files
+            during storage and exchange between authorized users.
+        </p>
+    </div>
+
+    <div class="row g-4">
+
+        <!-- Authentication -->
+        <div class="col-md-6 col-lg-4">
+            <div class="card feature-card h-100">
+                <div class="card-body p-4">
+
+                    <div class="feature-icon">🛡️</div>
+
+                    <h4 class="card-title mt-3">
+                        Secure Authentication
+                    </h4>
+
+                    <p class="card-text">
+                        User authentication with password hashing
+                        helps protect accounts against unauthorized access.
+                    </p>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Encryption -->
+        <div class="col-md-6 col-lg-4">
+            <div class="card feature-card h-100">
+                <div class="card-body p-4">
+
+                    <div class="feature-icon">🔐</div>
+
+                    <h4 class="card-title mt-3">
+                        AES-256-GCM Encryption
+                    </h4>
+
+                    <p class="card-text">
+                        Files are encrypted with AES-GCM, which provides
+                        confidentiality and authentication of encrypted data.
+                    </p>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Key exchange -->
+        <div class="col-md-6 col-lg-4">
+            <div class="card feature-card h-100">
+                <div class="card-body p-4">
+
+                    <div class="feature-icon">🔑</div>
+
+                    <h4 class="card-title mt-3">
+                        RSA-OAEP Key Protection
+                    </h4>
+
+                    <p class="card-text">
+                        RSA-OAEP protects the AES file key so that an
+                        authorized recipient can recover it using their key pair.
+                    </p>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- File transfer -->
+        <div class="col-md-6 col-lg-4">
+            <div class="card feature-card h-100">
+                <div class="card-body p-4">
+
+                    <div class="feature-icon">📤</div>
+
+                    <h4 class="card-title mt-3">
+                        Secure File Exchange
+                    </h4>
+
+                    <p class="card-text">
+                        Upload files for intended recipients through the
+                        portal's existing encrypted file-sharing workflow.
+                    </p>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Integrity -->
+        <div class="col-md-6 col-lg-4">
+            <div class="card feature-card h-100">
+                <div class="card-body p-4">
+
+                    <div class="feature-icon">✅</div>
+
+                    <h4 class="card-title mt-3">
+                        Data Integrity
+                    </h4>
+
+                    <p class="card-text">
+                        AES-GCM authentication helps detect modifications
+                        to encrypted file contents during decryption.
+                    </p>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Smartphone -->
+        <div class="col-md-6 col-lg-4">
+            <div class="card feature-card h-100">
+                <div class="card-body p-4">
+
+                    <div class="feature-icon">📱</div>
+
+                    <h4 class="card-title mt-3">
+                        Smartphone Camera
+                    </h4>
+
+                    <p class="card-text">
+                        Capture photos on a supported smartphone browser
+                        and send them through the existing upload workflow.
+                    </p>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- Call to Action -->
+<section class="container pb-5">
+    <div class="cta-section text-center p-4 p-md-5">
+
+        <h2 class="fw-bold">Ready to Get Started?</h2>
+
+        <p class="mb-4">
+            Create an account to securely exchange files with other users.
+        </p>
+
+        <a href="{{ url_for('register') }}"
+           class="btn btn-primary btn-lg">
+            Create Your Account →
+        </a>
+
+    </div>
+</section>
+
+{% endblock %}

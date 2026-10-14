@@ -1,0 +1,121 @@
+
+{% extends "base.html" %}
+
+{% block title %}Registered Users - CryptoKey Portal{% endblock %}
+
+{% block content %}
+<div class="admin-users-page">
+    <div class="container py-5">
+
+        <!-- Page heading -->
+        <div class="admin-users-header">
+            <div class="admin-users-icon">
+                <i class="bi bi-people-fill"></i>
+            </div>
+            <p class="admin-users-eyebrow">ADMINISTRATION CENTER</p>
+            <h1>Registered Users</h1>
+            <p>Review the accounts registered on your secure portal.</p>
+        </div>
+
+        <!-- User count -->
+        <div class="admin-users-summary">
+            <div class="admin-users-summary-icon">
+                <i class="bi bi-person-check-fill"></i>
+            </div>
+            <div>
+                <div class="admin-users-summary-label">Registered accounts</div>
+                <div class="admin-users-summary-number">{{ users|length }}</div>
+            </div>
+        </div>
+
+        <!-- Users table -->
+        <div class="admin-users-panel mt-4">
+            <div class="admin-users-panel-heading">
+                <div>
+                    <h2>User Directory</h2>
+                    <p>Account information registered with the portal</p>
+                </div>
+                <span class="admin-users-count">
+                    {{ users|length }} user{% if users|length != 1 %}s{% endif %}
+                </span>
+            </div>
+
+            {% if users %}
+            <div class="table-responsive">
+                <table class="table admin-users-table align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">User</th>
+                            <th scope="col">Mobile</th>
+                            <th scope="col">Email Address</th>
+                            <th scope="col">Registered At</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in users %}
+                        <tr>
+                            <td class="admin-users-index">{{ loop.index }}</td>
+                            <td>
+                                <div class="admin-users-name-cell">
+                                    <div class="admin-users-avatar">
+                                        <i class="bi bi-person-fill"></i>
+                                    </div>
+                                    <span class="admin-users-name">
+                                        {{ user.name }}
+                                    </span>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="admin-users-detail">
+                                    <i class="bi bi-phone me-1"></i>
+                                    {{ user.mobile }}
+                                </span>
+                            </td>
+                            <td>
+                                <span class="admin-users-email">
+                                    {{ user.email }}
+                                </span>
+                            </td>
+                            <td>
+                                <span class="admin-users-date">
+                                    {{ user.created_at }}
+                                </span>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="admin-users-empty">
+                <div class="admin-users-empty-icon">
+                    <i class="bi bi-people"></i>
+                </div>
+                <h3>No registered users yet</h3>
+                <p>Newly registered accounts will appear here.</p>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Information note -->
+        <div class="admin-users-note mt-4">
+            <i class="bi bi-info-circle-fill"></i>
+            <p>
+                This directory displays registered account details.
+                Only authorized administrators should access this information.
+            </p>
+        </div>
+
+        <!-- Back navigation -->
+        <div class="admin-users-actions mt-4">
+            <a href="{{ url_for('admin_dashboard') }}"
+               class="btn admin-users-back-btn">
+                <i class="bi bi-arrow-left me-2"></i>
+                Back to Admin Dashboard
+            </a>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

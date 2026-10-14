@@ -1,0 +1,147 @@
+
+{% extends "base.html" %}
+
+{% block title %}Secure File Transfers - CryptoKey Portal{% endblock %}
+
+{% block content %}
+<div class="admin-secure-files-page">
+    <div class="container py-5">
+
+        <!-- Page heading -->
+        <div class="admin-secure-files-header">
+            <div class="admin-secure-files-icon">
+                <i class="bi bi-shield-lock-fill"></i>
+            </div>
+            <p class="admin-secure-files-eyebrow">ADMINISTRATION CENTER</p>
+            <h1>Secure File Transfers</h1>
+            <p>
+                Review encrypted files exchanged through the portal
+                and their associated sender and recipient accounts.
+            </p>
+        </div>
+
+        <!-- Summary -->
+        <div class="admin-secure-files-summary">
+            <div class="admin-secure-files-summary-icon">
+                <i class="bi bi-file-earmark-lock-fill"></i>
+            </div>
+            <div>
+                <div class="admin-secure-files-summary-label">
+                    Recorded file transfers
+                </div>
+                <div class="admin-secure-files-summary-number">
+                    {{ files|length }}
+                </div>
+            </div>
+        </div>
+
+        <!-- Transfer table -->
+        <div class="admin-secure-files-panel mt-4">
+            <div class="admin-secure-files-panel-heading">
+                <div>
+                    <h2>Transfer History</h2>
+                    <p>File metadata recorded by the application</p>
+                </div>
+                <span class="admin-secure-files-count">
+                    {{ files|length }} transfer{% if files|length != 1 %}s{% endif %}
+                </span>
+            </div>
+
+            {% if files %}
+            <div class="table-responsive">
+                <table class="table admin-secure-files-table align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">File</th>
+                            <th scope="col">Sender</th>
+                            <th scope="col">Recipient</th>
+                            <th scope="col">Uploaded At</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for file in files %}
+                        <tr>
+                            <td class="admin-secure-files-index">
+                                {{ loop.index }}
+                            </td>
+
+                            <td>
+                                <div class="admin-secure-files-name-cell">
+                                    <div class="admin-secure-files-document-icon">
+                                        <i class="bi bi-file-earmark-lock"></i>
+                                    </div>
+                                    <div class="admin-secure-files-name-text">
+                                        <span class="admin-secure-files-filename">
+                                            {{ file.original_filename }}
+                                        </span>
+                                        <span class="admin-secure-files-encrypted">
+                                            <i class="bi bi-shield-check me-1"></i>
+                                            Encrypted file record
+                                        </span>
+                                    </div>
+                                </div>
+                            </td>
+
+                            <td>
+                                <span class="admin-secure-files-email">
+                                    <i class="bi bi-person-up me-1"></i>
+                                    {{ file.owner_email }}
+                                </span>
+                            </td>
+
+                            <td>
+                                <span class="admin-secure-files-email">
+                                    <i class="bi bi-person-down me-1"></i>
+                                    {{ file.recipient_email }}
+                                </span>
+                            </td>
+
+                            <td>
+                                <span class="admin-secure-files-date">
+                                    {{ file.uploaded_at }}
+                                </span>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="admin-secure-files-empty">
+                <div class="admin-secure-files-empty-icon">
+                    <i class="bi bi-folder2-open"></i>
+                </div>
+                <h3>No file transfers yet</h3>
+                <p>
+                    File transfer records will appear here after files
+                    have been exchanged through the portal.
+                </p>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Information note -->
+        <div class="admin-secure-files-note mt-4">
+            <i class="bi bi-info-circle-fill"></i>
+            <p>
+                This page displays file metadata. It does not independently
+                verify encryption integrity or prove that a recipient
+                successfully decrypted a file.
+            </p>
+        </div>
+
+        <!-- Navigation -->
+        <div class="admin-secure-files-actions mt-4">
+            <a
+                href="{{ url_for('admin_dashboard') }}"
+                class="btn admin-secure-files-back-btn"
+            >
+                <i class="bi bi-arrow-left me-2"></i>
+                Back to Admin Dashboard
+            </a>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

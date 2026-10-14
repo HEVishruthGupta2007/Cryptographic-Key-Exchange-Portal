@@ -1,0 +1,849 @@
+{% extends "base.html" %}
+
+{% block title %}
+
+Secure Upload - CryptoKey Portal
+
+{% endblock %}
+
+{% block content %}
+
+<div class="upload-page">
+    <div class="container">
+
+    <div class="row justify-content-center">
+
+        <div class="col-12 col-lg-8 col-xl-7">
+
+            <div class="card upload-panel">
+    <div class="card-body">
+
+                    <div class="upload-page-header">
+    <h2>Secure File Exchange</h2>
+    <p>Upload a file or capture a photo directly with your smartphone camera.</p>
+</div>
+
+                    <form
+
+                        id="uploadForm"
+
+                        action="{{ url_for('upload_file') }}"
+
+                        method="POST"
+
+                        enctype="multipart/form-data"
+
+                    >
+
+                        <!-- CSRF protection -->
+
+                        <input
+
+                        type="hidden"
+
+                        name="csrf_token"
+
+                        value="{{ csrf_token() }}"
+
+                        >
+
+                        <!-- Camera section -->
+
+                        <div class="upload-section upload-camera mb-4">
+
+                        <h5 class="mb-2">
+
+                        <i class="bi bi-camera"></i>
+
+                        Take a Photo
+
+                        </h5>
+
+                        <p class="small text-muted">
+
+                        Allow camera access when prompted.
+
+                        Your rear camera will be preferred
+
+                        when available.
+
+                        </p>
+
+                        <div
+
+                        id="cameraContainer"
+
+                        class="mb-3"
+
+                        hidden
+
+                        >
+
+                        <video
+
+                        id="cameraPreview"
+
+                        class="w-100 rounded-3 bg-dark"
+
+                        autoplay
+
+                        muted
+
+                        playsinline
+
+                        style="
+
+                        max-height: 420px;
+
+                        object-fit: contain;
+
+                        "
+
+                        ></video>
+
+                        <img
+
+                        id="capturedPreview"
+
+                        class="w-100 rounded-3"
+
+                        alt="Captured photo preview"
+
+                        style="
+
+                        max-height: 420px;
+
+                        object-fit: contain;
+
+                        "
+
+                        hidden
+
+                        >
+
+                        </div>
+
+                        <div class="d-grid gap-2">
+
+                        <button
+
+                        type="button"
+
+                        id="startCamera"
+
+                        class="btn btn-outline-primary"
+
+                        >
+
+                        <i class="bi bi-camera-video"></i>
+
+                        Open Camera
+
+                        </button>
+
+                        <button
+
+                        type="button"
+
+                        id="capturePhoto"
+
+                        class="btn btn-primary"
+
+                        hidden
+
+                        >
+
+                        <i class="bi bi-camera-fill"></i>
+
+                        Capture Photo
+
+                        </button>
+
+                        <button
+
+                        type="button"
+
+                        id="retakePhoto"
+
+                        class="btn btn-outline-secondary"
+
+                        hidden
+
+                        >
+
+                        <i class="bi bi-arrow-counterclockwise"></i>
+
+                        Retake Photo
+
+                        </button>
+
+                        </div>
+
+                        <p
+
+                        id="cameraStatus"
+
+                        class="small mt-3 mb-0"
+
+                        role="status"
+
+                        aria-live="polite"
+
+                        ></p>
+
+                        </div>
+
+                        <!-- Existing file upload option -->
+
+                        <div class="mb-4">
+
+                        <label
+
+                        for="file"
+
+                        class="form-label fw-semibold"
+
+                        >
+
+                        Choose a file or use a captured photo
+
+                        </label>
+
+                        <input
+
+                        type="file"
+
+                        id="file"
+
+                        name="file"
+
+                        class="form-control"
+
+                        accept=".txt,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.jpg,.jpeg,.png,.gif,.zip,.csv"
+
+                        required
+
+                        >
+
+                        <div class="form-text">
+
+                        Maximum upload size: 10 MB.
+
+                        Allowed types include PDF, documents,
+
+                        images, ZIP and CSV files.
+
+                        </div>
+
+                        <p
+
+                        id="fileStatus"
+
+                        class="small text-muted mt-2 mb-0"
+
+                        aria-live="polite"
+
+                        ></p>
+
+                        </div>
+
+                        <!-- Existing recipient selection -->
+
+                        <div class="mb-4">
+
+                        <label
+
+                        for="recipient_email"
+
+                        class="form-label fw-semibold"
+
+                        >
+
+                        Select Recipient
+
+                        </label>
+
+                        <select
+
+                        id="recipient_email"
+
+                        name="recipient_email"
+
+                        class="form-select"
+
+                        required
+
+                        >
+
+                        <option value="">
+
+                        -- Choose recipient --
+
+                        </option>
+
+                        {% for user in users %}
+
+                        <option value="{{ user.email }}">
+
+                        {{ user.name }} ({{ user.email }})
+
+                        </option>
+
+                        {% endfor %}
+
+                        </select>
+
+                        </div>
+
+                        <!-- Encryption information -->
+
+                        <div class="upload-security-note small mb-4">
+
+                        <strong>Security:</strong>
+
+                        The server encrypts the uploaded file
+
+                        using AES-256-GCM and protects the AES key
+
+                        using RSA-OAEP for the selected recipient.
+
+                        </div>
+
+                        <button
+
+                        type="submit"
+
+                        id="uploadButton"
+
+                        class="btn upload-submit-btn w-100 py-2"
+
+                        >
+
+                        <i class="bi bi-shield-lock"></i>
+
+                        Encrypt and Send File
+
+                        </button>
+
+                        <a
+
+                        href="{{ url_for('user_dashboard') }}"
+
+                        class="btn btn-outline-secondary upload-back-btn w-100 mt-2"
+
+                        >
+
+                        Back to Dashboard
+
+                        </a>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+</div>
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const form = document.getElementById("uploadForm");
+
+    const fileInput = document.getElementById("file");
+
+    const uploadButton = document.getElementById("uploadButton");
+
+    const cameraContainer =
+
+        document.getElementById("cameraContainer");
+
+    const video = document.getElementById("cameraPreview");
+
+    const capturedPreview =
+
+        document.getElementById("capturedPreview");
+
+    const startButton = document.getElementById("startCamera");
+
+    const captureButton = document.getElementById("capturePhoto");
+
+    const retakeButton = document.getElementById("retakePhoto");
+
+    const cameraStatus = document.getElementById("cameraStatus");
+
+    const fileStatus = document.getElementById("fileStatus");
+
+    const MAX_SIZE = 10 * 1024 * 1024;
+
+    const CAMERA_TARGET_SIZE = 9.5 * 1024 * 1024;
+
+    let cameraStream = null;
+
+    let capturedFile = null;
+
+    function stopCamera() {
+
+        if (cameraStream) {
+
+            cameraStream.getTracks().forEach(function (track) {
+
+                track.stop();
+
+            });
+
+        }
+
+        cameraStream = null;
+
+        video.srcObject = null;
+
+    }
+
+    function showCameraMode() {
+
+        cameraContainer.hidden = false;
+
+        video.hidden = false;
+
+        capturedPreview.hidden = true;
+
+        startButton.hidden = true;
+
+        captureButton.hidden = false;
+
+        retakeButton.hidden = true;
+
+    }
+
+    function showCapturedMode() {
+
+        cameraContainer.hidden = false;
+
+        video.hidden = true;
+
+        capturedPreview.hidden = false;
+
+        startButton.hidden = false;
+
+        captureButton.hidden = true;
+
+        retakeButton.hidden = false;
+
+    }
+
+    async function startCamera() {
+
+        cameraStatus.className = "small mt-3 mb-0 text-muted";
+
+        if (
+
+            !window.isSecureContext ||
+
+            !navigator.mediaDevices ||
+
+            !navigator.mediaDevices.getUserMedia
+
+        ) {
+
+            cameraStatus.textContent =
+
+                "Camera access requires HTTPS, or localhost " +
+
+                "during local development. Open this page using " +
+
+                "a secure connection.";
+
+            return;
+
+        }
+
+        stopCamera();
+
+        cameraStatus.textContent = "Requesting camera permission...";
+
+        try {
+
+            try {
+
+                cameraStream =
+
+                    await navigator.mediaDevices.getUserMedia({
+
+                        video: {
+
+                        facingMode: { ideal: "environment" },
+
+                        width: { ideal: 1920 },
+
+                        height: { ideal: 1080 }
+
+                        },
+
+                        audio: false
+
+                    });
+
+            } catch (firstError) {
+
+                // Retry with the browser's default camera.
+
+                cameraStream =
+
+                    await navigator.mediaDevices.getUserMedia({
+
+                        video: true,
+
+                        audio: false
+
+                    });
+
+            }
+
+            video.srcObject = cameraStream;
+
+            await video.play();
+
+            showCameraMode();
+
+            cameraStatus.textContent =
+
+                "Camera ready. Position your photo and capture it.";
+
+        } catch (error) {
+
+            stopCamera();
+
+            cameraStatus.className =
+
+                "small mt-3 mb-0 text-danger";
+
+            if (error.name === "NotAllowedError") {
+
+                cameraStatus.textContent =
+
+                    "Camera permission was denied. Allow camera " +
+
+                    "access in your browser settings.";
+
+            } else if (error.name === "NotFoundError") {
+
+                cameraStatus.textContent =
+
+                    "No available camera was found.";
+
+            } else {
+
+                cameraStatus.textContent =
+
+                    "Unable to open the camera. Check browser " +
+
+                    "permissions and try again.";
+
+            }
+
+        }
+
+    }
+
+    function canvasToBlob(canvas, quality) {
+
+        return new Promise(function (resolve, reject) {
+
+            canvas.toBlob(function (blob) {
+
+                if (!blob) {
+
+                    reject(new Error("Photo creation failed."));
+
+                    return;
+
+                }
+
+                resolve(blob);
+
+            }, "image/jpeg", quality);
+
+        });
+
+    }
+
+    async function capturePhoto() {
+
+        if (
+
+            !cameraStream ||
+
+            !video.videoWidth ||
+
+            !video.videoHeight
+
+        ) {
+
+            cameraStatus.textContent =
+
+                "Wait for the camera preview before capturing.";
+
+            return;
+
+        }
+
+        captureButton.disabled = true;
+
+        try {
+
+            const canvas = document.createElement("canvas");
+
+            const maxDimension = 1920;
+
+            const scale = Math.min(
+
+                1,
+
+                maxDimension / Math.max(
+
+                    video.videoWidth,
+
+                    video.videoHeight
+
+                )
+
+            );
+
+            canvas.width = Math.round(video.videoWidth * scale);
+
+            canvas.height = Math.round(video.videoHeight * scale);
+
+            const context = canvas.getContext("2d");
+
+            context.drawImage(
+
+                video,
+
+                0,
+
+                0,
+
+                canvas.width,
+
+                canvas.height
+
+            );
+
+            let quality = 0.85;
+
+            let blob = await canvasToBlob(canvas, quality);
+
+            // Reduce JPEG quality if needed to leave room
+
+            // below the server's 10 MB request limit.
+
+            while (
+
+                blob.size > CAMERA_TARGET_SIZE &&
+
+                quality > 0.45
+
+            ) {
+
+                quality -= 0.1;
+
+                blob = await canvasToBlob(canvas, quality);
+
+            }
+
+            if (blob.size > CAMERA_TARGET_SIZE) {
+
+                cameraStatus.textContent =
+
+                    "This photo is too large. Please retake it " +
+
+                    "with a lower resolution or use another image.";
+
+                return;
+
+            }
+
+            capturedFile = new File(
+
+                [blob],
+
+                "camera-photo.jpg",
+
+                { type: "image/jpeg" }
+
+            );
+
+            const transfer = new DataTransfer();
+
+            transfer.items.add(capturedFile);
+
+            fileInput.files = transfer.files;
+
+            capturedPreview.src = URL.createObjectURL(blob);
+
+            showCapturedMode();
+
+            stopCamera();
+
+            fileStatus.textContent =
+
+                "Captured photo ready: " +
+
+                (capturedFile.size / (1024 * 1024)).toFixed(2) +
+
+                " MB";
+
+            cameraStatus.textContent =
+
+                "Photo captured successfully. Retake it or " +
+
+                "select a recipient and upload.";
+
+        } catch (error) {
+
+            cameraStatus.textContent =
+
+                "Unable to capture the photo. Please try again.";
+
+        } finally {
+
+            captureButton.disabled = false;
+
+        }
+
+    }
+
+    function retakePhoto() {
+
+        fileInput.value = "";
+
+        capturedFile = null;
+
+        fileStatus.textContent = "";
+
+        if (capturedPreview.src) {
+
+            URL.revokeObjectURL(capturedPreview.src);
+
+            capturedPreview.removeAttribute("src");
+
+        }
+
+        startCamera();
+
+    }
+
+    startButton.addEventListener("click", startCamera);
+
+    captureButton.addEventListener("click", capturePhoto);
+
+    retakeButton.addEventListener("click", retakePhoto);
+
+    fileInput.addEventListener("change", function () {
+
+        // Choosing another file replaces the captured photo.
+
+        capturedFile = null;
+
+        if (capturedPreview.src) {
+
+            URL.revokeObjectURL(capturedPreview.src);
+
+            capturedPreview.removeAttribute("src");
+
+        }
+
+        stopCamera();
+
+        cameraContainer.hidden = true;
+
+        startButton.hidden = false;
+
+        captureButton.hidden = true;
+
+        retakeButton.hidden = true;
+
+        if (fileInput.files.length > 0) {
+
+            const file = fileInput.files[0];
+
+            fileStatus.textContent =
+
+                "Selected: " + file.name + " (" +
+
+                (file.size / (1024 * 1024)).toFixed(2) +
+
+                " MB)";
+
+        } else {
+
+            fileStatus.textContent = "";
+
+        }
+
+    });
+
+    form.addEventListener("submit", function (event) {
+
+        const file = fileInput.files[0];
+
+        if (!file) {
+
+            event.preventDefault();
+
+            alert("Please capture or select a file.");
+
+            return;
+
+        }
+
+        if (file.size > MAX_SIZE) {
+
+            event.preventDefault();
+
+            alert(
+
+                "File exceeds the 10 MB limit. " +
+
+                "Please select a smaller file."
+
+            );
+
+            return;
+
+        }
+
+        if (file.size === 0) {
+
+            event.preventDefault();
+
+            alert("The selected file is empty.");
+
+            return;
+
+        }
+
+        stopCamera();
+
+        uploadButton.disabled = true;
+
+        uploadButton.textContent = "Uploading and encrypting...";
+
+    });
+
+    // Release the camera if the user leaves the page.
+
+    window.addEventListener("pagehide", stopCamera);
+
+});
+
+</script>
+
+{% endblock %}

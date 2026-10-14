@@ -1,0 +1,143 @@
+
+{% extends "base.html" %}
+
+{% block title %}My Secure Files - CryptoKey Portal{% endblock %}
+
+{% block content %}
+<div class="files-page">
+    <div class="container py-5">
+
+        <!-- Page heading -->
+        <div class="files-page-header">
+            <div class="files-heading-icon">
+                <i class="bi bi-folder2-open"></i>
+            </div>
+            <p class="files-eyebrow">SECURE FILE MANAGEMENT</p>
+            <h1>My Secure Files</h1>
+            <p class="files-subtitle">
+                Access your encrypted file exchange history and download files securely.
+            </p>
+        </div>
+
+        <!-- File summary -->
+        <div class="files-summary mb-4">
+            <div class="files-summary-icon">
+                <i class="bi bi-file-earmark-lock2"></i>
+            </div>
+            <div>
+                <div class="files-summary-label">Available files</div>
+                <div class="files-summary-number">{{ files|length }}</div>
+            </div>
+        </div>
+
+        <!-- File list -->
+        <div class="files-panel">
+            <div class="files-panel-header">
+                <div>
+                    <h2>File History</h2>
+                    <p>Files associated with your account</p>
+                </div>
+                <span class="files-count">
+                    {{ files|length }} file{% if files|length != 1 %}s{% endif %}
+                </span>
+            </div>
+
+            {% if files %}
+            <div class="table-responsive">
+                <table class="table files-table align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">File</th>
+                            <th scope="col">Uploaded At</th>
+                            <th scope="col" class="text-end">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for file in files %}
+                        <tr>
+                            <td class="files-index">
+                                {{ loop.index }}
+                            </td>
+                            <td>
+                                <div class="files-name-cell">
+                                    <div class="files-document-icon">
+                                        <i class="bi bi-file-earmark-lock"></i>
+                                    </div>
+                                    <div class="files-name-text">
+                                        <span class="files-filename">
+                                            {{ file.original_filename }}
+                                        </span>
+                                        <span class="files-encrypted-label">
+                                            <i class="bi bi-shield-check"></i>
+                                            Encrypted file
+                                        </span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="files-date">
+                                    {{ file.uploaded_at }}
+                                </span>
+                            </td>
+                            <td class="text-end">
+                                <a
+                                    href="{{ url_for('download_file', file_id=file.id) }}"
+                                    class="btn files-download-btn"
+                                >
+                                    <i class="bi bi-download me-1"></i>
+                                    Download
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="files-empty-state">
+                <div class="files-empty-icon">
+                    <i class="bi bi-folder2-open"></i>
+                </div>
+                <h3>No files yet</h3>
+                <p>
+                    Your file list is empty. Upload a file or capture a photo
+                    to begin a secure file exchange.
+                </p>
+                <a href="{{ url_for('upload_file') }}" class="btn files-primary-btn">
+                    <i class="bi bi-cloud-arrow-up me-2"></i>
+                    Upload Your First File
+                </a>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Security note -->
+        <div class="files-security-note mt-4">
+            <div class="files-security-icon">
+                <i class="bi bi-shield-lock"></i>
+            </div>
+            <div>
+                <h3>Secure file exchange</h3>
+                <p>
+                    Files are protected using your portal's encryption workflow.
+                    Only download files you are authorized to access.
+                </p>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="files-page-actions mt-4">
+            <a href="{{ url_for('user_dashboard') }}" class="btn files-back-btn">
+                <i class="bi bi-arrow-left me-2"></i>
+                Back to Dashboard
+            </a>
+            <a href="{{ url_for('upload_file') }}" class="btn files-primary-btn">
+                <i class="bi bi-plus-lg me-2"></i>
+                Upload New File
+            </a>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

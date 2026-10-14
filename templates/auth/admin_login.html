@@ -1,0 +1,164 @@
+
+{% extends "base.html" %}
+
+{% block title %}Admin Login - CryptoKey Portal{% endblock %}
+
+{% block content %}
+<div class="admin-auth-page">
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-12 col-sm-10 col-md-7 col-lg-5">
+
+                <div class="admin-auth-card">
+                    <div class="admin-auth-header">
+                        <div class="admin-auth-icon">
+                            <i class="bi bi-shield-lock-fill"></i>
+                        </div>
+
+                        <p class="admin-auth-eyebrow">
+                            RESTRICTED ACCESS
+                        </p>
+
+                        <h1>Admin Login</h1>
+
+                        <p>
+                            Sign in to manage users and monitor
+                            secure file transfers.
+                        </p>
+                    </div>
+
+                    <div class="admin-auth-body">
+                        <div class="admin-auth-notice">
+                            <i class="bi bi-shield-check"></i>
+                            <span>Administrator credentials required</span>
+                        </div>
+
+                        <form
+                            method="POST"
+                            action="{{ url_for('admin_login') }}"
+                        >
+                            <!-- CSRF Protection -->
+                            <input
+                                type="hidden"
+                                name="csrf_token"
+                                value="{{ csrf_token() }}"
+                            >
+
+                            <!-- Username -->
+                            <div class="admin-auth-field">
+                                <label for="username" class="form-label">
+                                    Admin Username
+                                </label>
+
+                                <div class="admin-auth-input-wrap">
+                                    <i class="bi bi-person-badge"></i>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="username"
+                                        name="username"
+                                        autocomplete="username"
+                                        placeholder="Enter admin username"
+                                        required
+                                    >
+                                </div>
+                            </div>
+
+                            <!-- Password -->
+                            <div class="admin-auth-field">
+                                <label for="password" class="form-label">
+                                    Password
+                                </label>
+
+                                <div class="admin-auth-input-wrap">
+                                    <i class="bi bi-lock"></i>
+                                    <input
+                                        type="password"
+                                        class="form-control"
+                                        id="password"
+                                        name="password"
+                                        autocomplete="current-password"
+                                        placeholder="Enter your password"
+                                        required
+                                    >
+
+                                    <button
+                                        type="button"
+                                        class="admin-password-toggle"
+                                        id="toggleAdminPassword"
+                                        aria-label="Show password"
+                                        aria-controls="password"
+                                        aria-pressed="false"
+                                    >
+                                        <i class="bi bi-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <button
+                                type="submit"
+                                class="btn admin-auth-submit w-100"
+                            >
+                                <i class="bi bi-shield-lock me-2"></i>
+                                Sign In as Administrator
+                            </button>
+                        </form>
+
+                        <div class="admin-auth-divider">
+                            <span>Secure administration</span>
+                        </div>
+
+                        <div class="admin-auth-security">
+                            <i class="bi bi-info-circle-fill"></i>
+                            <p>
+                                Keep your administrator password private.
+                                Always sign out when you finish managing
+                                the portal.
+                            </p>
+                        </div>
+
+                        <div class="text-center mt-4">
+                            <a href="{{ url_for('home') }}"
+                               class="admin-auth-home-link">
+                                <i class="bi bi-arrow-left me-1"></i>
+                                Back to Home
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <p class="admin-auth-footer">
+                    CryptoKey Portal · Administrator Access
+                </p>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const passwordInput = document.getElementById("password");
+    const toggleButton = document.getElementById("toggleAdminPassword");
+
+    if (!passwordInput || !toggleButton) {
+        return;
+    }
+
+    toggleButton.addEventListener("click", function () {
+        const isPassword = passwordInput.type === "password";
+
+        passwordInput.type = isPassword ? "text" : "password";
+        toggleButton.setAttribute("aria-pressed", String(isPassword));
+        toggleButton.setAttribute(
+            "aria-label",
+            isPassword ? "Hide password" : "Show password"
+        );
+
+        toggleButton.innerHTML = isPassword
+            ? '<i class="bi bi-eye-slash"></i>'
+            : '<i class="bi bi-eye"></i>';
+    });
+});
+</script>
+{% endblock %}

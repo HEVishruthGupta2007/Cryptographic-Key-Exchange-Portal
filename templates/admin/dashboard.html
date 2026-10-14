@@ -1,0 +1,156 @@
+
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard - CryptoKey Portal{% endblock %}
+
+{% block content %}
+<div class="admin-dashboard-page">
+    <div class="container py-5">
+
+        <!-- Dashboard heading -->
+        <div class="admin-dashboard-header">
+            <div class="admin-dashboard-icon">
+                <i class="bi bi-shield-lock-fill"></i>
+            </div>
+            <p class="admin-dashboard-eyebrow">ADMINISTRATION CENTER</p>
+            <h1>Admin Dashboard</h1>
+            <p>
+                Monitor registered accounts and secure file exchanges
+                from one central dashboard.
+            </p>
+        </div>
+
+        <!-- Statistics -->
+        <div class="admin-section-heading">
+            <h2>Portal Overview</h2>
+            <p>Current platform statistics</p>
+        </div>
+
+        <div class="row g-4 mb-5">
+
+            <div class="col-12 col-md-4">
+                <div class="admin-stat-card admin-stat-users h-100">
+                    <div class="admin-stat-top">
+                        <div class="admin-stat-icon">
+                            <i class="bi bi-people-fill"></i>
+                        </div>
+                        <span class="admin-stat-label">USER ACCOUNTS</span>
+                    </div>
+                    <p class="admin-stat-title">Total Registered Users</p>
+                    <div class="admin-stat-number">{{ total_users }}</div>
+                    <p class="admin-stat-description">
+                        Registered accounts on the portal
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-4">
+                <div class="admin-stat-card admin-stat-files h-100">
+                    <div class="admin-stat-top">
+                        <div class="admin-stat-icon">
+                            <i class="bi bi-file-earmark-lock-fill"></i>
+                        </div>
+                        <span class="admin-stat-label">FILE STORAGE</span>
+                    </div>
+                    <p class="admin-stat-title">Total Secure Files</p>
+                    <div class="admin-stat-number">{{ total_files }}</div>
+                    <p class="admin-stat-description">
+                        Encrypted files recorded by the portal
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-4">
+                <div class="admin-stat-card admin-stat-transfers h-100">
+                    <div class="admin-stat-top">
+                        <div class="admin-stat-icon">
+                            <i class="bi bi-arrow-left-right"></i>
+                        </div>
+                        <span class="admin-stat-label">FILE EXCHANGE</span>
+                    </div>
+                    <p class="admin-stat-title">Total File Transfers</p>
+                    <div class="admin-stat-number">{{ total_transfers }}</div>
+                    <p class="admin-stat-description">
+                        Secure file exchanges recorded
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Administration actions -->
+        <div class="admin-section-heading">
+            <h2>Administration Tools</h2>
+            <p>Manage accounts, review files, or end your session</p>
+        </div>
+
+        <div class="row g-4">
+
+            <div class="col-12 col-md-4">
+                <div class="admin-action-card h-100">
+                    <div class="admin-action-icon admin-action-users">
+                        <i class="bi bi-people"></i>
+                    </div>
+                    <h3>User Management</h3>
+                    <p>
+                        View registered users and review their account
+                        information.
+                    </p>
+                    <a href="{{ url_for('admin_users') }}"
+                       class="btn admin-action-btn">
+                        View Users
+                        <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-4">
+                <div class="admin-action-card h-100">
+                    <div class="admin-action-icon admin-action-files">
+                        <i class="bi bi-folder2-open"></i>
+                    </div>
+                    <h3>Secure File Management</h3>
+                    <p>
+                        Review recorded encrypted files and transfer
+                        information.
+                    </p>
+                    <a href="{{ url_for('admin_files') }}"
+                       class="btn admin-action-btn">
+                        View Secure Files
+                        <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-4">
+                <div class="admin-action-card h-100">
+                    <div class="admin-action-icon admin-action-logout">
+                        <i class="bi bi-box-arrow-right"></i>
+                    </div>
+                    <h3>Administrator Session</h3>
+                    <p>
+                        Finish your administration session when you
+                        have completed your work.
+                    </p>
+                    <a href="{{ url_for('admin_logout') }}"
+                       class="btn admin-logout-btn">
+                        Logout
+                        <i class="bi bi-box-arrow-right ms-1"></i>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="admin-dashboard-note mt-5">
+            <i class="bi bi-info-circle-fill"></i>
+            <p>
+                Dashboard totals are displayed using the statistics
+                provided by the application. They should not be treated
+                as a substitute for reviewing security audit logs.
+            </p>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,150 @@
+
+{% extends "base.html" %}
+
+{% block title %}My Profile - CryptoKey Portal{% endblock %}
+
+{% block content %}
+<div class="profile-page">
+    <div class="container py-5">
+
+        <!-- Profile heading -->
+        <div class="profile-page-header">
+            <div class="profile-avatar">
+                <i class="bi bi-person-fill"></i>
+            </div>
+            <p class="profile-eyebrow">ACCOUNT SETTINGS</p>
+            <h1>My Profile</h1>
+            <p class="profile-subtitle">
+                View your account details and cryptographic key status.
+            </p>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-8 col-xl-7">
+
+                <div class="profile-panel">
+                    <div class="profile-panel-heading">
+                        <div>
+                            <h2>Personal Information</h2>
+                            <p>Your registered account details</p>
+                        </div>
+                        <span class="profile-readonly-badge">
+                            <i class="bi bi-lock-fill me-1"></i>
+                            Read-only
+                        </span>
+                    </div>
+
+                    <div class="profile-panel-body">
+
+                        <div class="profile-field">
+                            <label for="profileName">Full Name</label>
+                            <div class="profile-input-wrap">
+                                <i class="bi bi-person"></i>
+                                <input
+                                    id="profileName"
+                                    type="text"
+                                    class="form-control"
+                                    value="{{ user.name }}"
+                                    readonly
+                                >
+                            </div>
+                        </div>
+
+                        <div class="profile-field">
+                            <label for="profileMobile">Mobile Number</label>
+                            <div class="profile-input-wrap">
+                                <i class="bi bi-phone"></i>
+                                <input
+                                    id="profileMobile"
+                                    type="text"
+                                    class="form-control"
+                                    value="{{ user.mobile }}"
+                                    readonly
+                                >
+                            </div>
+                        </div>
+
+                        <div class="profile-field">
+                            <label for="profileEmail">Email Address</label>
+                            <div class="profile-input-wrap">
+                                <i class="bi bi-envelope"></i>
+                                <input
+                                    id="profileEmail"
+                                    type="email"
+                                    class="form-control"
+                                    value="{{ user.email }}"
+                                    readonly
+                                >
+                            </div>
+                        </div>
+
+                        <div class="profile-field">
+                            <label for="profileCreated">Account Created</label>
+                            <div class="profile-input-wrap">
+                                <i class="bi bi-calendar3"></i>
+                                <input
+                                    id="profileCreated"
+                                    type="text"
+                                    class="form-control"
+                                    value="{{ user.created_at }}"
+                                    readonly
+                                >
+                            </div>
+                        </div>
+
+                        <div class="profile-key-section">
+                            <div class="profile-key-icon">
+                                <i class="bi bi-shield-lock-fill"></i>
+                            </div>
+
+                            <div class="profile-key-content">
+                                <h3>RSA Key Status</h3>
+
+                                {% if user.public_key %}
+                                <span class="profile-key-status profile-key-available">
+                                    <i class="bi bi-check-circle-fill me-1"></i>
+                                    Public key available
+                                </span>
+                                <p>
+                                    Your account has a public RSA key available
+                                    for the portal's key-exchange workflow.
+                                </p>
+                                {% else %}
+                                <span class="profile-key-status profile-key-missing">
+                                    <i class="bi bi-exclamation-circle-fill me-1"></i>
+                                    Public key unavailable
+                                </span>
+                                <p>
+                                    An RSA public key was not found for your
+                                    account. Contact the administrator for help.
+                                </p>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="profile-privacy-note">
+                            <i class="bi bi-info-circle-fill"></i>
+                            <p>
+                                This page displays your registered information.
+                                It does not expose your private RSA key.
+                            </p>
+                        </div>
+
+                        <div class="d-grid mt-4">
+                            <a
+                                href="{{ url_for('user_dashboard') }}"
+                                class="btn profile-back-btn"
+                            >
+                                <i class="bi bi-arrow-left me-2"></i>
+                                Back to Dashboard
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

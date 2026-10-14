@@ -1,0 +1,154 @@
+```html
+{% extends "base.html" %}
+
+{% block title %}User Login - CryptoKey Portal{% endblock %}
+
+{% block content %}
+<section class="auth-page">
+    <div class="container">
+        <div class="row justify-content-center align-items-center">
+
+            <div class="col-12 col-sm-10 col-md-7 col-lg-5 col-xl-4">
+                <div class="card auth-card shadow-lg">
+                    <div class="card-body">
+
+                        <div class="auth-icon" aria-hidden="true">
+                            🔐
+                        </div>
+
+                        <h1 class="auth-heading text-center">
+                            Welcome Back
+                        </h1>
+
+                        <p class="auth-subtitle text-center">
+                            Sign in to your secure file exchange portal.
+                        </p>
+
+                        <div class="auth-security-note">
+                            <span aria-hidden="true">🛡️</span>
+                            Authorized users only
+                        </div>
+
+                        <form
+                            id="loginForm"
+                            method="POST"
+                            action="{{ url_for('login') }}"
+                        >
+                            <!-- CSRF protection -->
+                            <input
+                                type="hidden"
+                                name="csrf_token"
+                                value="{{ csrf_token() }}"
+                            >
+
+                            <!-- Email -->
+                            <div class="mb-3">
+                                <label for="email" class="form-label">
+                                    Email Address
+                                </label>
+
+                                <input
+                                    type="email"
+                                    class="form-control"
+                                    id="email"
+                                    name="email"
+                                    placeholder="you@example.com"
+                                    autocomplete="username"
+                                    required
+                                >
+                            </div>
+
+                            <!-- Password -->
+                            <div class="mb-4">
+                                <label for="password" class="form-label">
+                                    Password
+                                </label>
+
+                                <div class="password-field">
+                                    <input
+                                        type="password"
+                                        class="form-control"
+                                        id="password"
+                                        name="password"
+                                        placeholder="Enter your password"
+                                        autocomplete="current-password"
+                                        required
+                                    >
+
+                                    <button
+                                        type="button"
+                                        class="password-toggle"
+                                        id="togglePassword"
+                                        aria-label="Show password"
+                                        aria-pressed="false"
+                                    >
+                                        Show
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Login -->
+                            <div class="d-grid">
+                                <button
+                                    type="submit"
+                                    class="btn btn-primary btn-lg auth-submit"
+                                >
+                                    Sign In Securely →
+                                </button>
+                            </div>
+                        </form>
+
+                        <div class="auth-divider">
+                            <span>New to CryptoKey?</span>
+                        </div>
+
+                        <div class="text-center">
+                            <a
+                                href="{{ url_for('register') }}"
+                                class="auth-register-link"
+                            >
+                                Create an account
+                            </a>
+                        </div>
+
+                        <p class="auth-bottom-note text-center">
+                            Your secure file exchange starts here.
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<script>
+    (() => {
+        const password = document.getElementById("password");
+        const toggle = document.getElementById("togglePassword");
+
+        if (!password || !toggle) {
+            return;
+        }
+
+        toggle.addEventListener("click", () => {
+            const isVisible = password.type === "text";
+
+            password.type = isVisible ? "password" : "text";
+            toggle.textContent = isVisible ? "Show" : "Hide";
+
+            toggle.setAttribute(
+                "aria-pressed",
+                String(!isVisible)
+            );
+
+            toggle.setAttribute(
+                "aria-label",
+                isVisible ? "Show password" : "Hide password"
+            );
+        });
+    })();
+</script>
+{% endblock %}
+```
